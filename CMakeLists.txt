@@ -89,12 +89,16 @@ set(LIB_SOURCES
     src/standard/2d/box2d/box2d_physics_system.cpp
     src/standard/2d/camera/camera.cpp
     src/standard/2d/interpolation/interpolation_system.cpp
+    src/standard/2d/opengl2/opengl2_shader.cpp
+    src/standard/2d/opengl2/opengl2_system.cpp
     src/standard/2d/primitive/primitive_system.cpp
     src/standard/2d/primitive/primitive.cpp
     src/standard/2d/primitive/webgl2_default_primitive_shaders.cpp
+    src/standard/2d/primitive/opengl2_default_primitive_shaders.cpp
     src/standard/2d/render/render_system.cpp
     src/standard/2d/sprite/sprite_system.cpp
     src/standard/2d/sprite/sprite.cpp
+    src/standard/2d/sprite/opengl2_default_sprite_shaders.cpp
     src/standard/2d/sprite/webgl2_default_sprite_shaders.cpp
     src/standard/2d/transform/transform.cpp
     src/standard/2d/webgl2/webgl2_shader.cpp
@@ -111,6 +115,18 @@ set(TEST_SOURCES
 add_library(JamJar
     ${LIB_SOURCES}
 )
+
+
+if (EMSCRIPTEN)
+    set(CMAKE_CXX_FLAGS  "-s USE_SDL=2")
+else()
+    find_package(SDL2 REQUIRED)
+    include_directories(${SDL2_INCLUDE_DIRS})
+
+    find_package(GLEW REQUIRED)
+    include_directories(${GLEW_INCLUDE_DIRS})
+    target_link_libraries(JamJar PRIVATE ${SDL2_LIBRARIES} ${GLEW_LIBRARIES} GL)
+endif()
 
 target_link_libraries(JamJar PRIVATE stb_image)
 target_link_libraries(JamJar PRIVATE box2d)

@@ -20,6 +20,8 @@ class SpriteSystem : public VectorSystem {
     static bool evaluator(Entity *entity, const std::vector<JamJar::Component *> &components);
 #ifdef __EMSCRIPTEN__
     void loadWebgl2Shaders();
+#else
+    void loadOpenGlShaders();
 #endif
 };
 }; // namespace JamJar::Standard::_2D

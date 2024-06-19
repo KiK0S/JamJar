@@ -18,6 +18,8 @@ JamJar::Standard::_2D::PrimitiveSystem::PrimitiveSystem(MessageBus *messageBus)
     this->messageBus->Subscribe(this, JamJar::Game::MESSAGE_PRE_RENDER);
 #ifdef __EMSCRIPTEN__
     this->loadWebgl2Shaders();
+#else
+    this->loadOpenGLShaders();
 #endif
 }
 
@@ -37,6 +39,26 @@ void JamJar::Standard::_2D::PrimitiveSystem::loadWebgl2Shaders() {
     this->messageBus->Publish(
         std::make_unique<JamJar::MessagePayload<std::unique_ptr<WebGL2DefaultPrimitiveVertexShader>>>(
             JamJar::Standard::_2D::WebGL2System::MESSAGE_LOAD_SHADER, std::move(vertShader)));
+}
+#endif
+
+
+#ifndef __EMSCRIPTEN__
+#include "standard/2d/primitive/opengl2_default_primitive_shaders.hpp"
+#include "standard/2d/opengl2/opengl2_system.hpp"
+void JamJar::Standard::_2D::PrimitiveSystem::loadOpenGLShaders() {
+    // Load OpenGL fragment shader
+    auto fragShader = std::make_unique<OpenGLDefaultPrimitiveFragmentShader>(
+        JamJar::Standard::_2D::OpenGLDefaultPrimitiveFragmentShader());
+    this->messageBus->Publish(
+        std::make_unique<JamJar::MessagePayload<std::unique_ptr<OpenGLDefaultPrimitiveFragmentShader>>>(
+            JamJar::Standard::_2D::OpenGLSystem::MESSAGE_LOAD_SHADER, std::move(fragShader)));
+    // Load OpenGL vertex shader
+    auto vertShader = std::make_unique<OpenGLDefaultPrimitiveVertexShader>(
+        JamJar::Standard::_2D::OpenGLDefaultPrimitiveVertexShader());
+    this->messageBus->Publish(
+        std::make_unique<JamJar::MessagePayload<std::unique_ptr<OpenGLDefaultPrimitiveVertexShader>>>(
+            JamJar::Standard::_2D::OpenGLSystem::MESSAGE_LOAD_SHADER, std::move(vertShader)));
 }
 #endif
 
