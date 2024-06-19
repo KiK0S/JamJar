@@ -140,15 +140,15 @@ if(JAMJAR_NATIVE_COMPILE_UNIT_TESTS)
 
 endif()
 
-add_subdirectory (examples/Collision)
-add_subdirectory (examples/Fullscreen)
-add_subdirectory (examples/MouseInput)
-add_subdirectory (examples/Physics)
-add_subdirectory (examples/PhysicsResizing)
-add_subdirectory (examples/Primitives)
-add_subdirectory (examples/Rotator)
-add_subdirectory (examples/Sprites)
-add_subdirectory (examples/Cursor)
+#add_subdirectory (examples/Collision)
+#add_subdirectory (examples/Fullscreen)
+#add_subdirectory (examples/MouseInput)
+#add_subdirectory (examples/Physics)
+#add_subdirectory (examples/PhysicsResizing)
+#add_subdirectory (examples/Primitives)
+#add_subdirectory (examples/Rotator)
+#add_subdirectory (examples/Sprites)
+#add_subdirectory (examples/Cursor)
 
 ### ===== clang-format ===== ###
 
