@@ -6,6 +6,7 @@
 #include "system/stateful_system.hpp"
 #include "system/system_entity.hpp"
 #include <functional>
+#include <optional>
 #include <vector>
 
 namespace JamJar {
